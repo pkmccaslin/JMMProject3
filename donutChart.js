@@ -24,10 +24,10 @@ const data = {
   "Others": 15900
 };
 
-let total = 0;
+let totalStreams = 0;
 for (const key in data) {
   if (data.hasOwnProperty(key)) {
-    total += data[key];
+    totalStreams += data[key];
   }
 }
 
@@ -100,36 +100,67 @@ window.addEventListener("scroll", () => {
 
 
     // const segmentAngle = ;
-    //const segmentAngle = 360*(data_ready[activeIndex].data.value)/total;
+    // const segmentAngle = 360*(data_ready[activeIndex].data.value)/total;
 
-    // let activeIndex = 0;
-    // if (0 < ratio && ratio < data_ready[0].value / total) {
-    //   activeIndex = 0;
-    // }
-    // else if (data_ready[0].value / total < ratio && ratio < data_ready[1].value / total) {
-    //   activeIndex = 1;
-    // }
-    // else if (data_ready[1].value / total < ratio && ratio < data_ready[2].value / total) {
-    //   activeIndex = 2;
-    // }
-    // else if (data_ready[2].value / total < ratio && ratio < data_ready[3].value / total) {
-    //   activeIndex = 3;
-    // }
-    // console.log()
+    console.log(ratio);
+    console.log("space");
+    console.log(data_ready[0].value/totalStreams);
+    console.log(total);
 
     let activeIndex = 0;
     let cumulative = 0;
     for (let i = 0; i < data_ready.length; i++) {
       const value = data_ready[i].data.value;
-      const start = cumulative / total;
+      const start = cumulative / totalStreams;
       cumulative += value;
-      const end = cumulative / total;
-
+      const end = cumulative / totalStreams;
+    
       if (ratio >= start && ratio < end) {
         activeIndex = i;
         break;
       }
     }
+
+    // let activeIndex = 0;
+    // if (0 < ratio && ratio < data_ready[0].value / totalStreams) {
+    //   activeIndex = 0;
+    // }
+    // else if (data_ready[0].value / totalStreams < ratio && ratio < data_ready[1].value / totalStreams) {
+    //   activeIndex = 1;
+    // }
+    // else if (data_ready[1].value / totalStreams < ratio && ratio < data_ready[2].value / totalStreams) {
+    //   activeIndex = 2;
+    // }
+    // else if (data_ready[2].value / totalStreams < ratio && ratio < data_ready[3].value / totalStreams) {
+    //   activeIndex = 3;
+    // }
+    // console.log()
+  const currentKey = data_ready[activeIndex].data.key;
+  const currentValue = data_ready[activeIndex].data.value;
+  const percentage = Math.round(100 * currentValue / totalStreams);
+  artistTopInfo.innerHTML = `${currentKey}`;
+  artistBottomInfo.innerHTML = `made up ${percentage}% of streams`;
+
+
+
+    // const audio = new Audio("25 Phones (feat. Marcymane).mp3");
+    // audio.play();
+
+
+  // let currentlyPlaying = null;
+  // // Stop previously playing audio
+  // if (currentlyPlaying && currentlyPlaying !== audioFiles[currentKey]) {
+  //   currentlyPlaying.pause();
+  //   currentlyPlaying.currentTime = 0;
+  // }
+
+  // // Play current audio
+  // const currentAudio = audioFiles[currentKey];
+  // if (currentlyPlaying !== currentAudio) {
+  //   currentAudio.play();
+  //   currentlyPlaying = currentAudio;
+  // }
+
     paths.attr("fill", (d, i) => i === activeIndex ? "red" : "black");
 
   }
@@ -144,23 +175,5 @@ window.addEventListener("scroll", () => {
 
 
 
-  const currentKey = data_ready[activeIndex].data.key;
-  const currentValue = data_ready[activeIndex].data.value;
-  const percentage = Math.round(100 * currentValue / total);
-  artistTopInfo.innerHTML = `${currentKey}`;
-  artistBottomInfo.innerHTML = `made up ${percentage}% of streams`;
-
-  let currentlyPlaying = null;
-  // Stop previously playing audio
-  if (currentlyPlaying && currentlyPlaying !== audioFiles[currentKey]) {
-    currentlyPlaying.pause();
-    currentlyPlaying.currentTime = 0;
-  }
-
-  // Play current audio
-  const currentAudio = audioFiles[currentKey];
-  if (currentlyPlaying !== currentAudio) {
-    currentAudio.play();
-    currentlyPlaying = currentAudio;
-  }
+  
 });
